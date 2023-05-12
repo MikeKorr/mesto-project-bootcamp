@@ -1,0 +1,30 @@
+.profile__container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+@media (max-width: 1060px) {
+  .profile__container {
+    margin-top: 38.25px;
+    width: calc(100% - 38px);
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile__container {
+    margin-top: 38.25px;
+    width: calc(100% - 38px);
+    align-items: center;
+  }
+}
+
+@media (max-width: 320px) {
+  .profile__container {
+    margin-top: 38.25px;
+    width: calc(100% - 38px);
+    align-items: center;
+  }
+}

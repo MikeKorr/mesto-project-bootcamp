@@ -1,0 +1,19 @@
+.popup__container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 34px 36px 37px;
+}
+
+@media (max-width: 600px) {
+  .popup__container {
+    margin: 25px 22px;
+  }
+}
+
+@media (max-width: 320px) {
+  .popup__container {
+    margin: 25px 22px;
+  }
+}

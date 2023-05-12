@@ -1,0 +1,17 @@
+.popup__value-place {
+  max-width: 238px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px;
+  border-bottom: 1px solid #000000;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.popup__value-place:last-of-type {
+  margin-bottom: 0;
+}
