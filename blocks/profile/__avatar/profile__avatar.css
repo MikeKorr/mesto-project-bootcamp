@@ -11,9 +11,3 @@
     margin-right: 0;
   }
 }
-
-@media (max-width: 320px) {
-  .profile__avatar {
-    margin-right: 0;
-  }
-}

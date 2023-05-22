@@ -12,19 +12,3 @@
     align-items: center;
   }
 }
-
-@media (max-width: 768px) {
-  .profile__container {
-    margin-top: 38.25px;
-    width: calc(100% - 38px);
-    align-items: center;
-  }
-}
-
-@media (max-width: 320px) {
-  .profile__container {
-    margin-top: 38.25px;
-    width: calc(100% - 38px);
-    align-items: center;
-  }
-}

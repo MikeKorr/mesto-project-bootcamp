@@ -11,9 +11,3 @@
     margin: 25px 22px;
   }
 }
-
-@media (max-width: 320px) {
-  .popup__container {
-    margin: 25px 22px;
-  }
-}

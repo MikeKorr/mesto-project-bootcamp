@@ -5,6 +5,9 @@
   line-height: 22px;
   color: #ffffff;
   max-width: 336px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -13,16 +16,6 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    text-align: center;
-  }
-}
-
-@media (max-width: 320px) {
-  .profile__subtitle {
-    max-width: 282px;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
+    text-align: start;
   }
 }

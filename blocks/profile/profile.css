@@ -24,8 +24,7 @@
 
 @media (max-width: 320px) {
   .profile {
-    width: 100%;
+    text-align: start;
     max-width: 282px;
-    flex-direction: column;
   }
 }
