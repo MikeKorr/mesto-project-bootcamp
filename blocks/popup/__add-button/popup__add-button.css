@@ -5,13 +5,19 @@
   font-size: 18px;
   line-height: 22px;
   text-align: center;
-  color: #ffffff;
+  color: #fff;
   background-color: black;
   border-radius: 2px;
   text-align: center;
   height: 50px;
   border: none;
   width: 100%;
+}
+
+.popup__add-button:disabled {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  color: #000000;
 }
 
 .popup__add-button:hover {
