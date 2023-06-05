@@ -4,7 +4,6 @@ import {
   popupImage,
   popupCard,
   inputAddForm,
-  imageClose,
   cardsPlace,
   elementTemplate,
   nameCard,
@@ -12,8 +11,8 @@ import {
 } from "./src/components/card.js";
 
 import {
-  buttonOpenClose,
-  overlayClose,
+  closeOpenButton,
+  closeOverlay,
   inputEditForm,
   titleInput,
   descriptionInput,
@@ -22,47 +21,51 @@ import {
 } from "./src/components/modal";
 
 import {
+  disableButton,
   enableValidation,
   saveAllButton,
-  inputList,
   saveButton,
   addButton,
 } from "./src/components/validate";
 
+//import { setCards, getCards } from "./src/components/api";
 //переменные
 const popupEditButton = document.querySelector(".profile__edit-button");
 const popupAddButton = document.querySelector(".profile__add-button");
 export const popupProfile = document.querySelector(".popup__profile");
 const profileClose = document.querySelector(".popup__edit-close");
 const cardClose = document.querySelector(".popup__add-close");
+const imageClose = document.querySelector(".popup__image-close");
 
-popupProfile.addEventListener("mousedown", overlayClose);
-popupCard.addEventListener("mousedown", overlayClose);
-popupImage.addEventListener("mousedown", overlayClose);
+popupProfile.addEventListener("mousedown", closeOverlay);
+popupCard.addEventListener("mousedown", closeOverlay);
+popupImage.addEventListener("mousedown", closeOverlay);
 
 //слушатели закрытия и открытия popup
 popupEditButton.addEventListener("click", function () {
-  buttonOpenClose(popupProfile);
+  closeOpenButton(popupProfile);
 });
 popupAddButton.addEventListener("click", function () {
-  buttonOpenClose(popupCard);
+  closeOpenButton(popupCard);
 });
 profileClose.addEventListener("click", function () {
-  buttonOpenClose(popupProfile);
+  closeOpenButton(popupProfile);
 });
 cardClose.addEventListener("click", function () {
-  buttonOpenClose(popupCard);
+  closeOpenButton(popupCard);
+});
+
+imageClose.addEventListener("click", function () {
+  closeOpenButton(popupImage);
 });
 
 //сброс submit
-function handleSubmitForm(evt) {
+function handleCardsFormSubmit(evt) {
   evt.preventDefault();
-  // evt.target.reset();
-  // buttonDisable(evt.submitter);
+  evt.target.reset();
 }
 
-inputEditForm.addEventListener("submit", handleSubmitForm);
-inputAddForm.addEventListener("submit", handleSubmitForm);
+inputAddForm.addEventListener("submit", handleCardsFormSubmit);
 
 //Валидационные настройки
 const validationSettings = {

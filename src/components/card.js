@@ -1,42 +1,32 @@
 const popupImage = document.querySelector(".popup__image-container");
 const popupCard = document.querySelector(".popup__card");
 const inputAddForm = document.forms.formAdd;
-const imageClose = document.querySelector(".popup__image-close");
 const cardsPlace = document.querySelector(".element");
 const elementTemplate = document.querySelector("#element-template").content;
 const nameCard = inputAddForm.inputAddName;
 const urlCard = inputAddForm.inputAddUrl;
 
-export {
-  popupImage,
-  popupCard,
-  inputAddForm,
-  imageClose,
-  cardsPlace,
-  elementTemplate,
-  nameCard,
-  urlCard,
-};
-
-function buttonOpenClose(element) {
+function closeOpenButton(element) {
   element.classList.toggle("popup_opened");
 }
 
 //функция отображения лайков
-function likeButton(evt) {
+function handleLikeButton(evt) {
   evt.target.classList.toggle("element__button");
 }
 
 //функция удаления карточки
-function trashButton(element) {
+function handleTrashButton(element) {
   element.remove();
 }
 
 //функции передачи изображения
-function imageContainer(event) {
-  buttonOpenClose(popupImage);
+function changeImageContainer(event) {
+  closeOpenButton(popupImage);
   document.querySelector(".popup__card-image").src = event.target.src;
-  document.querySelector(".popup__card-image").alt = event.target.cardName;
+  document.querySelector(".popup__card-image").alt = event.target.alt;
+  document.querySelector(".popup__figure-caption").textContent =
+    event.target.alt;
 }
 
 //функция рендринга
@@ -49,18 +39,18 @@ function createCard(cardName, cardUrl) {
   const elementContainer = elementTemplate
     .querySelector(".element__container")
     .cloneNode(true);
-  elementContainer
-    .querySelector(".element__button_active")
-    .addEventListener("click", likeButton);
-  elementContainer
-    .querySelector(".element__trash-button")
-    .addEventListener("click", function () {
-      trashButton(elementContainer);
-    });
-  elementContainer
-    .querySelector(".element__image")
-    .addEventListener("click", imageContainer);
+  const likeButtonCard = elementContainer.querySelector(
+    ".element__button_active"
+  );
+  const trashButtonCard = elementContainer.querySelector(
+    ".element__trash-button"
+  );
+  likeButtonCard.addEventListener("click", handleLikeButton);
+  trashButtonCard.addEventListener("click", function () {
+    handleTrashButton(elementContainer);
+  });
   const elementImage = elementContainer.querySelector(".element__image");
+  elementImage.addEventListener("click", changeImageContainer);
   elementContainer.querySelector(".element__text").textContent = cardName;
   elementImage.src = cardUrl;
   elementImage.alt = cardName;
@@ -68,10 +58,8 @@ function createCard(cardName, cardUrl) {
 }
 inputAddForm.addEventListener("submit", function (event) {
   event.preventDefault();
-  nameCard.value = nameCard.value;
-  urlCard.value = urlCard.value;
   renderCards(createCard(nameCard.value, urlCard.value));
-  buttonOpenClose(popupCard);
+  closeOpenButton(popupCard);
 });
 
 //6 стартовых карточек
@@ -106,6 +94,12 @@ initialCards.forEach(function (element) {
   renderCards(createCard(element.name, element.link));
 });
 
-imageClose.addEventListener("click", function () {
-  buttonOpenClose(popupImage);
-});
+export {
+  popupImage,
+  popupCard,
+  inputAddForm,
+  cardsPlace,
+  elementTemplate,
+  nameCard,
+  urlCard,
+};

@@ -5,35 +5,24 @@ const descriptionInput = inputEditForm.inputDescriptionEdit;
 const inputProfile = document.querySelector(".profile__title");
 const inputDescription = document.querySelector(".profile__subtitle");
 
-export {
-  buttonOpenClose,
-  overlayClose,
-  inputEditForm,
-  titleInput,
-  descriptionInput,
-  inputProfile,
-  inputDescription,
-};
-
-function buttonOpenClose(element) {
+function closeOpenButton(element) {
   element.classList.toggle("popup_opened");
 }
 
 //функция закрытия через ESC и оверлей
 function escClose(evt) {
-  const openedPopup = document.querySelector(".popup_opened"); //локальное объявление, так как при глобальном перестает работать
   if (evt.key === "Escape") {
-    buttonOpenClose(openedPopup);
+    const openedPopup = document.querySelector(".popup_opened");
+    closeOpenButton(openedPopup);
   }
 }
 
 document.addEventListener("keydown", escClose);
 
 //функция закрытия через overlay
-function overlayClose(evt) {
-  const openedPopup = document.querySelector(".popup_opened"); //локальное объявление, так как при глобальном перестает работать
+function closeOverlay(evt) {
   if (evt.target.classList.contains("popup")) {
-    buttonOpenClose(openedPopup);
+    closeOpenButton(evt.target);
   }
 }
 
@@ -46,7 +35,15 @@ function saveProfile(titleValue, descriptionValue) {
 inputEditForm.addEventListener("submit", function (event) {
   event.preventDefault();
   saveProfile(titleInput.value, descriptionInput.value);
-  titleInput.value = titleInput.value;
-  descriptionInput.value = descriptionInput.value;
-  buttonOpenClose(popupProfile);
+  closeOpenButton(popupProfile);
 });
+
+export {
+  closeOpenButton,
+  closeOverlay,
+  inputEditForm,
+  titleInput,
+  descriptionInput,
+  inputProfile,
+  inputDescription,
+};

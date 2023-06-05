@@ -3,52 +3,49 @@ import { inputEditForm } from "../components/modal";
 
 //Валидация
 
-const inputList = document.querySelectorAll(".popup__value");
 const saveButton = document.querySelector(".popup__save-button");
 const addButton = document.querySelector(".popup__add-button");
 const saveAllButton = document.querySelectorAll(".popup_save");
 
-export { saveAllButton, inputList, saveButton, addButton };
-
 //функция, показывающая ошибку
-function errorShow(input, errorMessage) {
+function showError(input, errorMessage) {
   const spanId = `error-${input.id}`;
   const errorField = document.getElementById(spanId);
   errorField.textContent = errorMessage;
 }
 
 //функция, скрывающая ошибку
-function errorHide(input) {
+function hideError(input) {
   const spanId = `error-${input.id}`;
   const errorField = document.getElementById(spanId);
   errorField.textContent = "";
 }
 
 // функция проверки валидации
-function validCheck(input) {
+function checkValid(input) {
   if (input.validity.valid) {
-    errorHide(input);
+    hideError(input);
   } else {
-    errorShow(input, input.validationMessage);
+    showError(input, input.validationMessage);
   }
 }
 
 // функия активной кнопки
-function buttonEnable(saveAllButton) {
+function enableButton(saveAllButton) {
   saveAllButton.disabled = false;
 }
 
 //функция деактивации кнопки
-function buttonDisable(saveAllButton) {
+function disableButton(saveAllButton) {
   saveAllButton.disabled = true;
 }
 
 //функции кнопок при проверке валадиции
-function formValidCheck(saveAllButton, form) {
+function checkValidForm(saveAllButton, form) {
   if (form.checkValidity()) {
-    buttonEnable(saveAllButton);
+    enableButton(saveAllButton);
   } else {
-    buttonDisable(saveAllButton);
+    disableButton(saveAllButton);
   }
 }
 
@@ -73,11 +70,11 @@ function formValidCheck(saveAllButton, form) {
 function setEventListeners(form, settings) {
   const inputList = form.querySelectorAll(settings.inputSelector);
   const saveAllButton = form.querySelector(settings.buttonSaveSelector);
-  formValidCheck(saveAllButton, form);
+  checkValidForm(saveAllButton, form);
   inputList.forEach(function (input) {
     input.addEventListener("input", function () {
-      validCheck(input);
-      formValidCheck(saveAllButton, form);
+      checkValid(input);
+      checkValidForm(saveAllButton, form);
     });
   });
 }
@@ -88,3 +85,5 @@ export function enableValidation(settings) {
     setEventListeners(form, settings);
   });
 }
+
+export { disableButton, saveAllButton, saveButton, addButton };

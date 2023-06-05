@@ -1,4 +1,4 @@
 .popup__figure {
   margin: 0;
-  display: flex;
+  display: block;
 }
