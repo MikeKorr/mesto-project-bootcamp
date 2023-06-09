@@ -7,7 +7,6 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    `
     <header class="header">
       <img
         class="header__logo"
@@ -40,6 +39,35 @@
     <footer class="footer">
       <p class="footer__text">© 2023 Mesto Russia</p>
     </footer>
+    <div class="popup popup__avatar">
+      <div class="popup__info-space">
+        <div class="popup__container">
+          <button class="popup__avatar-close"></button>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <form
+            class="popup__form"
+            id="inputChangeAvatar"
+            novalidate
+            name="avatarChange"
+          >
+            <div class="popup__label">
+              <input
+                name="inputAvatarChange"
+                id="inputAvatarChange"
+                type="url"
+                class="popup__value"
+                placeholder="Ссылка на фото"
+                required
+              />
+              <span id="error-inputAvatarChange" class="popup__error"></span>
+            </div>
+            <button type="submit" class="popup__save-avatar popup_save">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="popup popup__profile">
       <div class="popup__info-space">
         <div class="popup__container">
@@ -144,6 +172,7 @@
           <h2 class="element__text"></h2>
           <div class="element__like-button">
             <button class="element__button element__button_active"></button>
+            <span class="element__like-number">0</span>
           </div>
         </div>
         <button class="element__trash-button"></button>

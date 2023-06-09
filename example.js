@@ -217,3 +217,13 @@ export {
   nameCard,
   urlCard,
 };
+
+if (cardData.owner._id !== args._id) {
+  trashButtonCard.remove();
+} else {
+  trashButtonCard.addEventListener("click", function () {
+    deleteCards(cardData._id).then(() => {
+      handleTrashButton(elementContainer);
+    });
+  });
+}

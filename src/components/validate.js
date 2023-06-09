@@ -1,10 +1,10 @@
 import { inputAddForm } from "../components/card";
-import { inputEditForm } from "../components/modal";
+import { inputEditForm, inputAvatarForm } from "../components/modal";
 
 //Валидация
 
-const saveButton = document.querySelector(".popup__save-button");
-const addButton = document.querySelector(".popup__add-button");
+// const saveButton = document.querySelector(".popup__save-button");
+// const addButton = document.querySelector(".popup__add-button");
 const saveAllButton = document.querySelectorAll(".popup_save");
 
 //функция, показывающая ошибку
@@ -49,24 +49,6 @@ function checkValidForm(saveAllButton, form) {
   }
 }
 
-//слушатели импутов
-
-// inputList.forEach(function (input) {
-//   formValidCheck(saveAllButton, inputAddForm);
-//   input.addEventListener("input", function () {
-//     validCheck(input);
-//     formValidCheck(saveAllButton, inputAddForm);
-//   });
-// });
-
-// inputList.forEach(function (input) {
-//   formValidCheck(saveAllButton, inputEditForm);
-//   input.addEventListener("input", function () {
-//     validCheck(input);
-//     formValidCheck(saveAllButton, inputEditForm);
-//   });
-// });
-
 function setEventListeners(form, settings) {
   const inputList = form.querySelectorAll(settings.inputSelector);
   const saveAllButton = form.querySelector(settings.buttonSaveSelector);
@@ -86,4 +68,4 @@ export function enableValidation(settings) {
   });
 }
 
-export { disableButton, saveAllButton, saveButton, addButton };
+export { disableButton, saveAllButton /*saveButton, addButton*/ };

@@ -1,6 +1,9 @@
 {
   "name": "mesto-project-bootcamp",
   "version": "1.0.0",
+  "repository": {
+    "url": "https://mikekorr.github.io/mesto-project-bootcamp/"
+  },
   "description": "mesto-project",
   "main": "index.js",
   "scripts": {
