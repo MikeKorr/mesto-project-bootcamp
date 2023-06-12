@@ -22,32 +22,28 @@ function closeOpenButton(element) {
 
 //функция отображения лайков
 
-// function handleLikeButton(evt, elem) {
-//   const queryMetod = isLiked(evt.likes)
-//     ? deleteLike(evt._id)
-//     : putLike(evt._id);
-//   getCards((res) => {
-//     res.likes;
-//   });
-//   queryMetod
-//     .then((res) => {
-//       counterLikes(
-//         res.likes,
-//         elem.querySelector(".element__button"),
-//         elem.querySelector(".element__like-number")
-//       );
-//     })
-//     .catch((e) => console.log(e));
-// }
+function handleLikeButton(item, elem) {
+  const queryMetod = item.isLiked ? deleteLike(item._id) : putLike(item._id);
+  queryMetod
+    .then((res) => {
+      item.isLiked = isLiked(res.likes);
+      counterLikes(
+        res.likes,
+        elem.querySelector(".element__button"),
+        elem.querySelector(".element__like-number")
+      );
+    })
+    .catch((e) => console.log(e));
+}
 
-// function isLiked(likesArray) {
-//   return likesArray.some((item) => item._id === userId);
-// }
+function isLiked(likesArray) {
+  return likesArray.some((item) => item._id === userId);
+}
 
-// function counterLikes(likesArray, likeButton, likeCounter) {
-//   likeButton.classList.toggle("element__button_active", isLiked(likesArray));
-//   likeCounter.textContent = likesArray.length;
-// }
+function counterLikes(likesArray, likeButton, likeCounter) {
+  likeButton.classList.toggle("element__button_active", isLiked(likesArray));
+  likeCounter.textContent = likesArray.length;
+}
 
 //функция удаления карточки
 
@@ -74,6 +70,7 @@ function renderAppendCards(element) {
 }
 //функция добавления карточек
 function createCard(cardData, args) {
+  cardData.isLiked = isLiked(cardData.likes);
   const elementContainer = elementTemplate
     .querySelector(".element__container")
     .cloneNode(true);
