@@ -6,6 +6,7 @@
 - CSS3
 - GRID
 - FlexBox
+- JavaScript
 
 **Описание**
 

@@ -1,15 +1,8 @@
-import { saveAllButton } from "./validate";
-
-function renderLoading(isLoading) {
-  if (isLoading) {
-    saveAllButton.forEach(function (element) {
-      element.textContent = "Сохранение...";
-    });
-  } else {
-    saveAllButton.forEach(function (element) {
-      element.textContent = "Сохранить";
-    });
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
   }
+  return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export { renderLoading };
+export { checkResponse };

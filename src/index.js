@@ -1,6 +1,7 @@
 import "./styles/index.css";
 
 import {
+  handleCardsFormSubmit,
   popupImage,
   popupCard,
   inputAddForm,
@@ -9,11 +10,13 @@ import {
   nameCard,
   urlCard,
   renderAppendCards,
+  renderPrependCards,
   createCard,
-} from "./src/components/card.js";
+} from "./components/card";
 
 import {
-  closeOpenButton,
+  openPopup,
+  closePopup,
   closeOverlay,
   inputEditForm,
   titleInput,
@@ -23,16 +26,26 @@ import {
   inputProfile,
   inputDescription,
   urlAvatar,
-} from "./src/components/modal";
+  saveProfile,
+  changeImage,
+  handleProfileFormSubmit,
+  handleAvatarFormSubmit,
+} from "./components/modal";
 
 import {
   disableButton,
   enableValidation,
-  saveAllButton,
   // saveButton,
   // addButton,
-} from "./src/components/validate";
-import { getAvatar, getCards, getUsers } from "./src/components/api";
+} from "./components/validate";
+import {
+  getAvatar,
+  getCards,
+  getUsers,
+  postCards,
+  patchProfile,
+  patchAvatar,
+} from "./components/api";
 
 //переменные
 const popupAvatar = document.querySelector(".popup__avatar");
@@ -45,6 +58,7 @@ const profileClose = document.querySelector(".popup__edit-close");
 const cardClose = document.querySelector(".popup__add-close");
 const imageClose = document.querySelector(".popup__image-close");
 const popupAvatarButton = document.querySelector(".profile__avatar-save");
+const submitButton = document.querySelectorAll(".popup_save");
 
 popupProfile.addEventListener("mousedown", closeOverlay);
 popupCard.addEventListener("mousedown", closeOverlay);
@@ -53,38 +67,32 @@ popupAvatar.addEventListener("mousedown", closeOverlay);
 
 //слушатели закрытия и открытия popup
 popupEditButton.addEventListener("click", function () {
-  closeOpenButton(popupProfile);
+  openPopup(popupProfile);
 });
 
 popupAddButton.addEventListener("click", function () {
-  closeOpenButton(popupCard);
+  openPopup(popupCard);
 });
 profileClose.addEventListener("click", function () {
-  closeOpenButton(popupProfile);
+  closePopup(popupProfile);
 });
 cardClose.addEventListener("click", function () {
-  closeOpenButton(popupCard);
+  closePopup(popupCard);
 });
 
 imageClose.addEventListener("click", function () {
-  closeOpenButton(popupImage);
+  closePopup(popupImage);
 });
 
 avatarClose.addEventListener("click", function () {
-  closeOpenButton(popupAvatar);
+  closePopup(popupAvatar);
 });
 
 avatarOpen.addEventListener("click", function () {
-  closeOpenButton(popupAvatar);
+  openPopup(popupAvatar);
 });
 
 //сброс submit
-function handleCardsFormSubmit(evt) {
-  evt.preventDefault();
-  evt.target.reset();
-}
-
-inputAddForm.addEventListener("submit", handleCardsFormSubmit);
 
 //Валидационные настройки
 const validationSettings = {
@@ -97,14 +105,24 @@ enableValidation(validationSettings);
 
 let userId;
 
-Promise.all([getCards(), getUsers()]).then(([allCards, userData]) => {
-  (userId = userData._id),
-    (inputProfile.textContent = userData.name),
-    (inputDescription.textContent = userData.about),
-    (urlAvatar.src = userData.avatar),
+inputEditForm.addEventListener("submit", handleProfileFormSubmit);
+
+inputAddForm.addEventListener("submit", handleCardsFormSubmit);
+
+inputAvatarForm.addEventListener("submit", handleAvatarFormSubmit);
+
+Promise.all([getCards(), getUsers()])
+  .then(([allCards, userData]) => {
+    userId = userData._id;
+    inputProfile.textContent = userData.name;
+    inputDescription.textContent = userData.about;
+    titleInput.value = userData.name;
+    descriptionInput.value = userData.about;
+    urlAvatar.src = userData.avatar;
     allCards.forEach((item) => {
       renderAppendCards(createCard(item, userData));
     });
-});
+  })
+  .catch((e) => console.log(e));
 
-export { popupAvatar, popupProfile, userId };
+export { popupAvatar, popupProfile, userId, submitButton, validationSettings };

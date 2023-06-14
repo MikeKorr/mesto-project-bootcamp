@@ -1,11 +1,11 @@
 import { inputAddForm } from "../components/card";
 import { inputEditForm, inputAvatarForm } from "../components/modal";
-
+import { submitButton } from "..";
 //Валидация
 
 // const saveButton = document.querySelector(".popup__save-button");
 // const addButton = document.querySelector(".popup__add-button");
-const saveAllButton = document.querySelectorAll(".popup_save");
+// const submitButton = form.querySelector(settings.buttonSaveSelector);
 
 //функция, показывающая ошибку
 function showError(input, errorMessage) {
@@ -31,32 +31,32 @@ function checkValid(input) {
 }
 
 // функия активной кнопки
-function enableButton(saveAllButton) {
-  saveAllButton.disabled = false;
+function enableButton(submitButton) {
+  submitButton.disabled = false;
 }
 
 //функция деактивации кнопки
-function disableButton(saveAllButton) {
-  saveAllButton.disabled = true;
+function disableButton(submitButton) {
+  submitButton.disabled = true;
 }
 
 //функции кнопок при проверке валадиции
-function checkValidForm(saveAllButton, form) {
+function checkValidForm(submitButton, form) {
   if (form.checkValidity()) {
-    enableButton(saveAllButton);
+    enableButton(submitButton);
   } else {
-    disableButton(saveAllButton);
+    disableButton(submitButton);
   }
 }
 
 function setEventListeners(form, settings) {
   const inputList = form.querySelectorAll(settings.inputSelector);
-  const saveAllButton = form.querySelector(settings.buttonSaveSelector);
-  checkValidForm(saveAllButton, form);
+  const submitButton = form.querySelector(settings.buttonSaveSelector);
+  checkValidForm(submitButton, form);
   inputList.forEach(function (input) {
     input.addEventListener("input", function () {
       checkValid(input);
-      checkValidForm(saveAllButton, form);
+      checkValidForm(submitButton, form);
     });
   });
 }
@@ -68,4 +68,4 @@ export function enableValidation(settings) {
   });
 }
 
-export { disableButton, saveAllButton /*saveButton, addButton*/ };
+export { disableButton /*saveButton, addButton*/ };

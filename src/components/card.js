@@ -7,18 +7,17 @@ import {
   getUsers,
 } from "./api";
 import { renderLoading } from "./utils";
-import { userId } from "../../index";
+import { userId, validationSettings } from "../index";
+import { openPopup, closePopup } from "./modal";
 const popupImage = document.querySelector(".popup__image-container");
 const popupCard = document.querySelector(".popup__card");
+const cardImage = document.querySelector(".popup__card-image");
+const cardCaption = document.querySelector(".popup__figure-caption");
 const inputAddForm = document.forms.formAdd;
 const cardsPlace = document.querySelector(".element");
 const elementTemplate = document.querySelector("#element-template").content;
 const nameCard = inputAddForm.inputAddName;
 const urlCard = inputAddForm.inputAddUrl;
-
-function closeOpenButton(element) {
-  element.classList.toggle("popup_opened");
-}
 
 //функция отображения лайков
 
@@ -27,7 +26,7 @@ function handleLikeButton(item, elem) {
   queryMetod
     .then((res) => {
       item.isLiked = isLiked(res.likes);
-      counterLikes(
+      setCounterLikes(
         res.likes,
         elem.querySelector(".element__button"),
         elem.querySelector(".element__like-number")
@@ -40,7 +39,7 @@ function isLiked(likesArray) {
   return likesArray.some((item) => item._id === userId);
 }
 
-function counterLikes(likesArray, likeButton, likeCounter) {
+function setCounterLikes(likesArray, likeButton, likeCounter) {
   likeButton.classList.toggle("element__button_active", isLiked(likesArray));
   likeCounter.textContent = likesArray.length;
 }
@@ -53,11 +52,10 @@ function handleTrashButton(element) {
 
 //функции передачи изображения
 function changeImageContainer(event) {
-  closeOpenButton(popupImage);
-  document.querySelector(".popup__card-image").src = event.target.src;
-  document.querySelector(".popup__card-image").alt = event.target.alt;
-  document.querySelector(".popup__figure-caption").textContent =
-    event.target.alt;
+  openPopup(popupImage);
+  cardImage.src = event.target.src;
+  cardImage.alt = event.target.alt;
+  cardCaption.textContent = event.target.alt;
 }
 
 //функция рендринга
@@ -76,7 +74,7 @@ function createCard(cardData, args) {
     .cloneNode(true);
   const likeButtonCard = elementContainer.querySelector(".element__button");
   const likesNumber = elementContainer.querySelector(".element__like-number");
-  counterLikes(cardData.likes, likeButtonCard, likesNumber);
+  setCounterLikes(cardData.likes, likeButtonCard, likesNumber);
   const trashButtonCard = elementContainer.querySelector(
     ".element__trash-button"
   );
@@ -85,18 +83,20 @@ function createCard(cardData, args) {
       trashButtonCard.remove();
     } else {
       trashButtonCard.addEventListener("click", function () {
-        deleteCards(cardData._id).then(() => {
-          handleTrashButton(elementContainer);
-        });
+        deleteCards(cardData._id)
+          .then(() => {
+            handleTrashButton(elementContainer);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
     }
   }
   likeButtonCard.addEventListener("click", () =>
     handleLikeButton(cardData, elementContainer)
   );
-  trashButtonCard.addEventListener("click", function () {
-    handleTrashButton(elementContainer);
-  });
+
   const elementImage = elementContainer.querySelector(".element__image");
   elementImage.addEventListener("click", changeImageContainer);
   elementContainer.querySelector(".element__text").textContent = cardData.name;
@@ -105,23 +105,28 @@ function createCard(cardData, args) {
   return elementContainer;
 }
 
-inputAddForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  renderLoading(true);
+//функция сабмита карточки
+function handleCardsFormSubmit(evt) {
+  evt.preventDefault();
+  evt.submitter.textContent = "Сохранение...";
   postCards(nameCard.value, urlCard.value)
     .then((res) => {
-      renderPrependCards(createCard(res));
-      closeOpenButton(popupCard);
-      renderLoading(false);
+      renderPrependCards(createCard(res, res.owner));
+      evt.target.reset();
+      evt.submitter.disabled = true;
+      evt.submitter.classList.add(validationSettings.buttonSaveSelector);
+      closePopup(popupCard);
     })
-    .then(getCards)
     .catch((err) => {
       console.log(err);
-      renderLoading(false);
+    })
+    .finally(() => {
+      evt.submitter.textContent = "Сохранить";
     });
-});
+}
 
 export {
+  handleCardsFormSubmit,
   popupImage,
   popupCard,
   inputAddForm,
@@ -130,5 +135,6 @@ export {
   nameCard,
   urlCard,
   renderAppendCards,
+  renderPrependCards,
   createCard,
 };
