@@ -1,6 +1,6 @@
 import { inputAddForm } from "../components/card";
 import { inputEditForm, inputAvatarForm } from "../components/modal";
-import { submitButton } from "..";
+import { submitButtons } from "..";
 //Валидация
 
 // const saveButton = document.querySelector(".popup__save-button");
@@ -50,10 +50,10 @@ function checkValidForm(submitButton, form) {
 }
 
 function setEventListeners(form, settings) {
-  const inputList = form.querySelectorAll(settings.inputSelector);
+  const inputLists = form.querySelectorAll(settings.inputSelector);
   const submitButton = form.querySelector(settings.buttonSaveSelector);
   checkValidForm(submitButton, form);
-  inputList.forEach(function (input) {
+  inputLists.forEach(function (input) {
     input.addEventListener("input", function () {
       checkValid(input);
       checkValidForm(submitButton, form);
@@ -62,8 +62,8 @@ function setEventListeners(form, settings) {
 }
 
 export function enableValidation(settings) {
-  const formList = document.querySelectorAll(settings.formSelector);
-  formList.forEach(function (form) {
+  const formLists = document.querySelectorAll(settings.formSelector);
+  formLists.forEach(function (form) {
     setEventListeners(form, settings);
   });
 }

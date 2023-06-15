@@ -58,7 +58,7 @@ const profileClose = document.querySelector(".popup__edit-close");
 const cardClose = document.querySelector(".popup__add-close");
 const imageClose = document.querySelector(".popup__image-close");
 const popupAvatarButton = document.querySelector(".profile__avatar-save");
-const submitButton = document.querySelectorAll(".popup_save");
+const submitButtons = document.querySelectorAll(".popup_save");
 
 popupProfile.addEventListener("mousedown", closeOverlay);
 popupCard.addEventListener("mousedown", closeOverlay);
@@ -125,4 +125,4 @@ Promise.all([getCards(), getUsers()])
   })
   .catch((e) => console.log(e));
 
-export { popupAvatar, popupProfile, userId, submitButton, validationSettings };
+export { popupAvatar, popupProfile, userId, submitButtons, validationSettings };

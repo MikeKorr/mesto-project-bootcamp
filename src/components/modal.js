@@ -12,21 +12,21 @@ const inputDescription = document.querySelector(".profile__subtitle");
 
 function closePopup(element) {
   element.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeEsc);
 }
 
 function openPopup(element) {
   element.classList.add("popup_opened");
+  document.addEventListener("keydown", closeEsc);
 }
 
 //функция закрытия через ESC и оверлей
-function escClose(evt) {
+function closeEsc(evt) {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }
-
-document.addEventListener("keydown", escClose);
 
 //функция закрытия через overlay
 function closeOverlay(evt) {
